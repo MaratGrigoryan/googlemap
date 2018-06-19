@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Google Map</title>
+    <style>
+        #map{
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+
+    <script>
+            function initMap() {
+                var element = document.getElementById('map');
+                var options = {
+                    zoom: 7,
+                    center: {lat: 40.177200, lng: 44.503490}
+                };
+    
+                var myMap = new google.maps.Map(element, options);
+    
+                var markers = [
+                    {
+                        coordinates:{ lat: 40.177200, lng: 44.503490},
+                        image: 'http://icons.iconarchive.com/icons/icons-land/vista-map-markers/48/Map-Marker-Marker-Outside-Chartreuse-icon.png',
+                        info: '<p>This is Yerevan</p>'
+                    },
+    
+                    {
+                        coordinates:{lat: 41.12072, lng: 44.28462},
+                        info: '<p>This is Tashir City</p>'
+                     }
+                ]
+    
+                for(var i = 0; i < markers.length; i++){
+                    addMarker(markers[i])    
+                }                
+                
+    
+                function addMarker(properties){
+                    var marker = new google.maps.Marker({
+                    position: properties.coordinates,
+                    map: myMap, 
+                })
+    
+                if(properties.image){
+                    marker.setIcon(properties.image);
+                    }
+                if(properties.info){
+                    var InfoWindow = new google.maps.InfoWindow({
+                            content: properties.info
+                        });
+                        
+                        
+                        marker.addListener('click', function(){
+                            InfoWindow.open(myMap, marker);
+                        })
+                    }
+    
+                }
+    
+            }
+        </script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOCZ-RF6E7BNW8X59rxuHvZ2Jp1F3NXsU&callback=initMap">
+    </script>
+</body>
+</html>
